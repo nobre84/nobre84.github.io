@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Idéias sobre desenvolvimento iOS">
+
+    <title>SceneKit Overview - iDeas</title>
+
+    <link rel="canonical" href="http://nobre84.github.io/tutorial/2016/03/03/scenekit-overview/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+    
+    <!-- Share CSS -->
+    <link rel="stylesheet" href="/css/share.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link type="application/atom+xml" rel="alternate" href="http://nobre84.github.io/feed.xml" title="" />
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-74878752-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">iDeas</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+				
+                <li>
+                    <a href="/about/">Sobre</a>
+                </li>
+				
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/farris/bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>SceneKit Overview</h1>
+                    
+                    <h2 class="subheading">Introdução aos principais conceitos do framework</h2>
+                    
+                    <span class="meta">Postado por Lucas Farris em 3/03/2016</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="share">
+  <li><a href="https://twitter.com/intent/tweet?text=SceneKit Overview&url=http://nobre84.github.io/tutorial/2016/03/03/scenekit-overview/" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter-square"></i></a></li>
+  <li><a href="https://facebook.com/sharer.php?u=http://nobre84.github.io/tutorial/2016/03/03/scenekit-overview/" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook-square"></i></a></li>
+  <li><a href="http://www.linkedin.com/shareArticle?mini=true&url=http://nobre84.github.io/tutorial/2016/03/03/scenekit-overview/" rel="nofollow" target="_blank" title="Share on Linkedlin"><i class="fa fa-linkedin-square"></i></a></li>
+  <li><a href="https://plus.google.com/share?url=http://nobre84.github.io/tutorial/2016/03/03/scenekit-overview/" rel="nofollow" target="_blank" title="Share on Google+"><i class="fa fa-google-plus-square"></i></a></li>
+</ul>
+                
+				<blockquote>
+  <p>Este artigo pertence à série de artigos equinociOS, e aqui iremos tratar do framework <a href="https://developer.apple.com/library/ios/documentation/SceneKit/Reference/SceneKit_Framework/">SceneKit</a>, que é uma biblioteca para desenvolvimento de gráficos 3d de alta performance. O código será escrito em <code class="highlighter-rouge">Swift</code>, e um exemplo completo do projeto pode ser encontrado <a href="https://github.com/luksfarris/carRush">neste repositório</a>. O presente artigo está licenciado como <a href="https://creativecommons.org/">CC - Creative Commons</a>.
+Você irá, acompanhando o texto, escrever umas <code class="highlighter-rouge">150</code> linhas de código, o tempo médio da leitura é de <code class="highlighter-rouge">30</code> minutos.</p>
+</blockquote>
+
+<hr />
+
+<h3 id="prlogo-declaraes-iniciais-e-criando-o-projeto">Prólogo: Declarações iniciais e criando o projeto.</h3>
+
+<p>Durante este texto iremos recriar juntos uma versão <em>minimalista</em> do fantástico jogo <a href="https://itunes.apple.com/en/app/2-cars/id936839198?mt=8&quot;">2 Cars</a>, mas em um ambiente tridimensional. Com isso aprenderemos sobre:</p>
+
+<ul>
+  <li>Física e colisões</li>
+  <li>Texturas e modelos 3d</li>
+  <li>Sistemas de partícula</li>
+  <li>Animações e interação com o usuário</li>
+</ul>
+
+<p>Para acompanhar não é necessário conhecimento prévio de <code class="highlighter-rouge">Swift</code>, apenas de programação básica, algumas noções de geometria, e um pouco de conhecimento do <code class="highlighter-rouge">XCode</code>.</p>
+
+<p>Comece tendo certeza que seu XCode está atualizado, pelo menos na versão <code class="highlighter-rouge">Version 7.2</code>. Crie um novo projeto, do tipo <code class="highlighter-rouge">Game</code>, escolha <code class="highlighter-rouge">Swift</code> para a linguagem, <code class="highlighter-rouge">SceneKit</code> como tecnologia, e <code class="highlighter-rouge">Universal</code> nos dispositivos. Salve onde preferir.</p>
+
+<p><img src="/img/farris/img1.png" alt="" /></p>
+
+<p>No projeto criado, voce poderá encontrar o arquivo <code class="highlighter-rouge">GameViewController.swift</code>. Abra ele e vamos comecar!</p>
+
+<h3 id="captulo-1-luzes-cmera-e-ao">Capítulo 1: Luzes, Câmera e Ação!</h3>
+
+<h6 id="no-qual-aprendemos-a-criar-cmeras-posicionar-elementos-criar-materiais-e-adicionar-objetos--cena">No qual aprendemos a criar câmeras, posicionar elementos, criar materiais e adicionar objetos à cena.</h6>
+<p>Apague tudo na classe <code class="highlighter-rouge">GameViewController</code>, e deixe apenas:</p>
+
+<p><code class="highlighter-rouge">swift
+import UIKit
+import QuartzCore
+import SceneKit
+class GameViewController: UIViewController {
+}
+</code>
+Em seguida, adicione variáveis pra câmera, pro chão e pra nossa cena:</p>
+
+<p><code class="highlighter-rouge">swift
+var camera:SCNNode!
+var ground:SCNNode!
+var scene:SCNScene!
+var sceneView:SCNView!
+</code>
+Adicione uma função para criar a cena:</p>
+
+<p><code class="highlighter-rouge">swift
+func createScene () {
+  scene = SCNScene()
+  sceneView = self.view as! SCNView
+  sceneView.scene = scene
+  sceneView.allowsCameraControl = true
+  sceneView.showsStatistics = true
+  sceneView.playing = true
+  sceneView.autoenablesDefaultLighting = true
+}
+</code></p>
+
+<p>Adicione uma função responsável por criar a câmera. Note que <code class="highlighter-rouge">.position</code> é a propriedade que define a posição tridimensional dela, e <code class="highlighter-rouge">eulerAngles</code> (medidos em radianos) definem a orientação (pra onde ela aponta). Os fotógrafos amadores poderão se divertir com os <a href="http://flexmonkey.blogspot.com/2015/05/depth-of-field-in-scenekit.html">demais parâmetros disponíveis para as lentes</a>.</p>
+
+<p><code class="highlighter-rouge">swift
+func createCamera () {
+  camera = SCNNode()
+  camera.camera = SCNCamera()
+  camera.position = SCNVector3(x: 0, y: 25, z: -18)
+  camera.eulerAngles = SCNVector3(x: -1, y: 0, z: 0)
+  scene.rootNode.addChildNode(camera)
+}
+</code></p>
+
+<p>Adicione uma função responsável por criar o chão. <code class="highlighter-rouge">SCNFloor</code> cria um plano infinito fixado inicialmente na origem. Note que vamos dar uma tonalidade amarela pra ele usando um <code class="highlighter-rouge">SCNMaterial</code>.</p>
+
+<p><code class="highlighter-rouge">swift
+func createGround () {
+  let groundGeometry = SCNFloor()
+  groundGeometry.reflectivity = 0.5
+  let groundMaterial = SCNMaterial()
+  groundMaterial.diffuse.contents = UIColor.yellowColor()
+  groundGeometry.materials = [groundMaterial]
+  ground = SCNNode(geometry: groundGeometry)
+  scene.rootNode.addChildNode(ground)
+}
+</code></p>
+
+<p>E junte tudo no <code class="highlighter-rouge">viewDidLoad()</code>:</p>
+
+<p><code class="highlighter-rouge">swift
+override func viewDidLoad() {
+  super.viewDidLoad()
+  createScene()
+  createCamera()
+  createGround()
+}
+</code></p>
+
+<p>Compile e rode e veja nosso cenário inicial. Use gestos para circular pelo terreno tridimensional.</p>
+
+<p><img src="/img/farris/img2.png" alt="" /></p>
+
+<h3 id="captulo-2-a-jornada-do-heri">Capítulo 2: A jornada do herói.</h3>
+
+<h6 id="no-qual-aprendemos-criar-ou-importar-objetos-tridimensionais-anim-los-e-a-interagir-com-o-usurio">No qual aprendemos criar ou importar objetos tridimensionais, animá-los e a interagir com o usuário.</h6>
+
+<p>Vamos criar um tímido cenário? Faremos uma faixa na nossa rodovia! Adicione este método e chame-o no <code class="highlighter-rouge">viewDidLoad</code>:</p>
+
+<p><code class="highlighter-rouge">swift
+func createScenario() {
+  for i in 20...70 {
+    let laneMaterial = SCNMaterial()
+    if i%5&lt;2 { // se a divisao de i por 5 for igual a 0 ou 1
+      laneMaterial.diffuse.contents = UIColor.clearColor()
+    } else { // se a divisao de i por 5 for 2,3 ou 4
+      laneMaterial.diffuse.contents = UIColor.blackColor()
+    }
+    let laneGeometry = SCNBox(width: 0.2, height: 0.1, length: 1, chamferRadius:0)
+    laneGeometry.materials = [laneMaterial]
+    let lane = SCNNode(geometry: laneGeometry)
+    lane.position = SCNVector3(x: 0, y: 0, z: -Float(i))
+    scene.rootNode.addChildNode(lane)
+    let moveDown = SCNAction.moveByX(0, y:0 , z: 5, duration: 0.3)
+    let moveUp = SCNAction.moveByX(0, y: 0, z: -5, duration: 0)
+    let moveLoop = SCNAction.repeatActionForever(SCNAction.sequence([moveDown, moveUp]))
+    lane.runAction(moveLoop)
+  }
+}
+</code></p>
+
+<p>Ok, tem muita coisa acontecendo aqui, vamos por partes. Estamos dentro de um <em>loop</em>, no qual <code class="highlighter-rouge">i</code> vai assumir todos os valores inteiros entre <code class="highlighter-rouge">20</code> e <code class="highlighter-rouge">70</code>. Em cada iteração, colocamos um pequeno tijolinho, <code class="highlighter-rouge">preto</code> ou <code class="highlighter-rouge">transparente</code>, dependendo de <code class="highlighter-rouge">i</code>. Note que isso vai colocar 3 tijolinhos pretos, e 2 transparentes.
+Em seguida, adicionamos uma animação ao conjunto. Todos os tijolinhos estão sujeitos a duas animações: <code class="highlighter-rouge">moveUp</code> e <code class="highlighter-rouge">moveDown</code>. A animação <code class="highlighter-rouge">moveLoop</code> combina as duas (usando o método <code class="highlighter-rouge">sequence</code>), e as repete para sempre (usando <code class="highlighter-rouge">repeatActionForever</code>). Por fim, <code class="highlighter-rouge">runAction</code>, que pode ser chamado a qualquer <code class="highlighter-rouge">SCNNode</code>, aplica a animação em cada um de nossos tijolinhos. Como cada faixa tem 3 tijolinhos pretos + 2 transparentes, nós andamos <code class="highlighter-rouge">5</code> pra baixo em <code class="highlighter-rouge">0.3</code> segundos, e instantaneamente subimos <code class="highlighter-rouge">5</code> pra dar a impressão de que é um movimento contínuo. Tente remover <code class="highlighter-rouge">moveUp</code> como experimento. Eis o resultado até agora:</p>
+
+<p><img src="/img/farris/gif1.gif" alt="" /></p>
+
+<p>Vamos adicionar nosso personagem principal? Adicione esta variável junto com as outras:</p>
+
+<p><code class="highlighter-rouge">swift
+var car:SCNNode!
+</code></p>
+
+<p>Em seguida adicione a função <code class="highlighter-rouge">createPlayer</code>, e <b>chame-a</b> no <code class="highlighter-rouge">viewDidLoad</code>:</p>
+
+<p><code class="highlighter-rouge">swift
+func createPlayer(){
+  car = SCNNode(geometry: SCNBox(width: 3, height: 2, length: 3, chamferRadius: 0.2))
+  let material = SCNMaterial()
+  material.reflective.contents = UIColor.blueColor()
+  material.diffuse.contents = UIColor.lightGrayColor()
+  car.geometry!.materials = [material]
+  scene.rootNode.addChildNode(car)
+  car.position = SCNVector3(-4,1,-25) // colocamos ele na frente da camera
+}
+</code></p>
+
+<p>Note que precisamos fazer um ajuste de translação para que nosso modelo se encaixasse no cenário. Rode o código, veja o carrinho aparecendo. Vamos adicionar um escapamento? Clique com o botão direito na pasta de seu projeto, vá em <code class="highlighter-rouge">Novo Arquivo... -&gt; Recurso -&gt; SceneKit Particle System</code> e use o template <code class="highlighter-rouge">Smoke</code> ou fumaça. Brinque como quiser com os parametros, segue um print de como deixar o sistema bacaninha:</p>
+
+<p><img src="/img/farris/img3.png" alt="" /></p>
+
+<p>Agora adicione este código no final da função <code class="highlighter-rouge">createPlayer</code>:</p>
+
+<p><code class="highlighter-rouge">swift
+let particleSystem = SCNParticleSystem(named: "SmokeParticles", inDirectory: nil)
+let exausterNode = SCNNode(geometry: SCNBox(width: 0, height: 0, length: 0, chamferRadius: 1))
+exausterNode.position = SCNVector3(0,0,1.5)
+exausterNode.addParticleSystem(particleSystem!)
+car.addChildNode(exausterNode)
+</code></p>
+
+<p>Vamos interagir com ele? Adicione a seguinte variavel <code class="highlighter-rouge">var onLeftLane:Bool = true</code>, e adicione este código no seu <code class="highlighter-rouge">viewDidLoad</code>:</p>
+
+<p><code class="highlighter-rouge">swift
+let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:"move:")
+let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "move:")
+scnView.addGestureRecognizer(tapGestureRecognizer)
+scnView.addGestureRecognizer(swipeGestureRecognizer)
+</code></p>
+
+<p>Em seguida, vamos implementar o <code class="highlighter-rouge">move:</code>:</p>
+
+<p><code class="highlighter-rouge">swift
+func move(sender: UITapGestureRecognizer){
+    let position = sender.locationInView(self.view) //localizacao do gesto
+    let right = position.x &gt; self.view.frame.size.width/2 // foi na esquerda ou direita?
+    if right == onLeftLane { // Pra onde vamos
+        let moveSideways:SCNAction = SCNAction.moveByX((right ? 8:-8), y: 0, z: 0, duration: 0.2)
+        moveSideways.timingMode = SCNActionTimingMode.EaseInEaseOut // suaviza a animacao
+        car.runAction(moveSideways)
+        onLeftLane = !right // atualiza a posicao do carro
+    }
+}
+</code></p>
+
+<p>Rode. O resultado deve ser algo como:</p>
+
+<p><img src="/img/farris/gif2.gif" alt="" /></p>
+
+<h3 id="captulo-3-obstculos-e-recompensas">Capítulo 3: Obstáculos e recompensas!</h3>
+
+<h6 id="no-qual-aprendemos-a-criar-inimigos-fsica-e-colises">No qual aprendemos a criar inimigos, física e colisões.</h6>
+
+<p>Vamos começar definindo quem serão nossas entidades capazes de interagir fisicamente entre si. Insira esse <code class="highlighter-rouge">enum</code> em seu <code class="highlighter-rouge">ViewController</code>:</p>
+
+<p><code class="highlighter-rouge">swift
+enum PhysicsCategory: Int {
+    case Player=1, Mob=2, Ground=4, Wall=8
+}
+</code></p>
+
+<p>Veja que os valores são binários, pois estamos simulando máscaras de bits. Em seguida, na função <code class="highlighter-rouge">createGround</code>, vamos dar um formato e um corpo pro nosso chão:</p>
+
+<p><code class="highlighter-rouge">swift
+func createGround () {
+    let groundGeometry = SCNFloor()
+    groundGeometry.reflectivity = 0.5
+    let groundMaterial = SCNMaterial()
+    groundMaterial.diffuse.contents = UIColor.yellowColor()
+    groundGeometry.materials = [groundMaterial]
+    ground = SCNNode(geometry: groundGeometry)
+    ground.physicsBody = SCNPhysicsBody(type: .Static, shape: SCNPhysicsShape(geometry: groundGeometry, options: nil))
+    ground.physicsBody!.categoryBitMask = PhysicsCategory.Ground.rawValue
+    ground.physicsBody!.contactTestBitMask = PhysicsCategory.Mob.rawValue
+    ground.physicsBody!.collisionBitMask = PhysicsCategory.Mob.rawValue
+    scene.rootNode.addChildNode(ground)
+}
+</code></p>
+
+<p>Vamos rever nossos conceitos. <code class="highlighter-rouge">SCNFloor</code>, que é uma subclasse de <code class="highlighter-rouge">SCNGeometry</code>, contém uma descrição geométrica (uma equação paramétrica, no caso) que serve para desenhar o objeto na tela. 
+<code class="highlighter-rouge">SCNNode</code> é a classe que nos ajuda a compor nossa cena, estabelecendo uma hierarquia entre os objetos tridimensionais. <code class="highlighter-rouge">SCNPhysicsShape</code> é a casca do objeto, é o que será usado para que as
+colisões sejam testadas, simulando um volume sólido. <code class="highlighter-rouge">SCNPhysicsBody</code> é o corpo físico, onde podemos atribuir campos gravitacionais, eletromagnéticos, atrito, velocidade, aceleração e outras
+propriedades físicas.</p>
+
+<p>No nosso <code class="highlighter-rouge">groundBody</code> criamos 3 máscaras:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">categoryBitMask</code>: nos ajuda a definir a qual categoria o objeto pertence.</li>
+  <li><code class="highlighter-rouge">contactTestBitMask</code>: define com quais objetos os testes de contato são feitos (veremos isso mais adiante).</li>
+  <li><code class="highlighter-rouge">collisionBitMask</code>: contra quais outras categorias esse objeto colide.</li>
+</ul>
+
+<p>Vamos criar alguns inimigos então? Adicione o método <code class="highlighter-rouge">spawnEnemyMob()</code>:</p>
+
+<p><code class="highlighter-rouge">swift
+func spawnEnemyMob() {
+    let enemyMaterial = SCNMaterial()
+    enemyMaterial.reflective.contents = UIColor.redColor()
+    let enemy = SCNNode(geometry: SCNBox(width: 3, height: 3, length: 3, chamferRadius: 0.2))
+    enemy.geometry!.materials = [enemyMaterial]
+    enemy.physicsBody = SCNPhysicsBody(type: .Dynamic, shape: SCNPhysicsShape(geometry: enemy.geometry!, options: nil))
+    enemy.physicsBody!.velocity = SCNVector3Make(0, 0, 30)
+    enemy.position = SCNVector3(Int(arc4random_uniform(2)*8)-4,2,-100)
+    enemy.physicsBody!.categoryBitMask = PhysicsCategory.Mob.rawValue
+    enemy.physicsBody!.contactTestBitMask = PhysicsCategory.Player.rawValue
+    enemy.physicsBody!.collisionBitMask = PhysicsCategory.Player.rawValue | PhysicsCategory.Ground.rawValue
+    scene.rootNode.addChildNode(enemy)
+}
+</code></p>
+
+<p>Quase nada de novo aqui. <code class="highlighter-rouge">Velocity</code> é a velocidade inicial que nosso objeto se encontrará quando aparecer na cena. Vamos invocar esses inimigos?
+Chame no seu <code class="highlighter-rouge">viewDidLoad()</code>:</p>
+
+<p><code class="highlighter-rouge">swift
+spawnEnemyMob()
+NSTimer.scheduledTimerWithTimeInterval(7, target: self, selector: "spawnEnemyMob", userInfo: nil, repeats: true)
+</code></p>
+
+<p>Note que criamos um inimigo, e programamos pra adicionar outro a cada 7 segundos. Rode o código, voce deverá ver algo como:</p>
+
+<p><img src="/img/farris/gif3.gif" alt="" /></p>
+
+<p>Notou que o bloco passou atravessando o carro? Precisamos adicionar um corpo ao nosso jogador. Adicione este código na sua função <code class="highlighter-rouge">createPlayer</code> (antes de <code class="highlighter-rouge">car.addChildNode(exausterNode)</code>):</p>
+
+<p><code class="highlighter-rouge">swift
+car.physicsBody = SCNPhysicsBody(type: .Kinematic, shape: SCNPhysicsShape(node: car, options: nil))
+</code></p>
+
+<p>Rode de novo, veja que existe a colisão. Vamos adicionar um objeto agora para capturar os inimigos e engatilhar a lógica de criação dos próximos. Adicione a variável <code class="highlighter-rouge">var wall:SCNNode!</code>, a chamada <code class="highlighter-rouge">createWall()</code> no seu <code class="highlighter-rouge">viewDidLoad</code>, e crie a função:</p>
+
+<p><code class="highlighter-rouge">swift
+func createWall () {
+    wall = SCNNode(geometry:SCNBox(width: 200, height: 200, length: 3, chamferRadius: 0))
+    wall.physicsBody = SCNPhysicsBody(type: .Static, shape: SCNPhysicsShape(geometry: wall.geometry!, options: nil))
+    wall.physicsBody!.categoryBitMask = PhysicsCategory.Wall.rawValue
+    wall.physicsBody!.contactTestBitMask = PhysicsCategory.Mob.rawValue
+    wall.physicsBody!.collisionBitMask = PhysicsCategory.Mob.rawValue
+    scene.rootNode.addChildNode(wall)
+}
+</code></p>
+
+<p>Vamos agora detectar as colisões. Adicione a interface <code class="highlighter-rouge">SCNPhysicsContactDelegate</code> ao seu view controller, assim:</p>
+
+<p><code class="highlighter-rouge">swift
+class GameViewController: UIViewController, SCNPhysicsContactDelegate
+</code></p>
+
+<p>Em seguida, vamos criar a função que recebe os avisos de colisões:</p>
+
+<p><code class="highlighter-rouge">swift
+func physicsWorld(world: SCNPhysicsWorld, didBeginContact contact: SCNPhysicsContact) {
+    if (contact.nodeA != ground &amp;&amp; contact.nodeB != ground) {
+        if (contact.nodeA == car || contact.nodeB == car) {
+            let enemyNode = contact.nodeA == car ? contact.nodeB : contact.nodeA
+            if (enemyNode.parentNode != nil) {
+                enemyNode.removeFromParentNode()
+                spawnEnemyMob()
+            }
+        } else if (contact.nodeA == wall || contact.nodeB == wall) {
+            let enemyNode = contact.nodeA == wall ? contact.nodeB : contact.nodeA
+            if (enemyNode.parentNode != nil) {
+                enemyNode.removeFromParentNode()
+                spawnEnemyMob()
+            }
+        }
+    }
+}
+</code></p>
+
+<p>Estamos verificando se a colisão é com nosso carro, ou com o muro que está escondido atrás da câmera. Se for com um deles, removemos o inimigo e criamos outro.
+Rode novamente, desvie dos inimigos!</p>
+
+<h3 id="eplogo-pra-onde-ir-agora">Epílogo: Pra onde ir agora.</h3>
+
+<p>Como desafio, sugiro as seguintes modificações:</p>
+
+<ul>
+  <li>Mostrar o score na tela;</li>
+  <li>Adicionar <em>swag</em> no movimento do carrinho;</li>
+  <li>Desligar o <code class="highlighter-rouge">autoenablesDefaultLighting</code> da cena, e adicionar farois ao carrinho;</li>
+  <li>Criar um modo POV onde a camera vai parar dentro do carrinho;</li>
+  <li>Adicionar mais faixas, mais inimigos, bonus ou até mais um carro (como é o jogo 2 Cars);</li>
+</ul>
+
+<p>Espero que tenha gostado do texto, fique ligado nos demais artigos dessa série. Qualquer dúvida, reclamação, sugestão, o repositório <a href="https://github.com/luksfarris/carRush">https://github.com/luksfarris/carRush</a> é o melhor lugar para me achar. Abra uma <code class="highlighter-rouge">Issue</code>, faça um <code class="highlighter-rouge">Pull Request</code>, brinque com o código, enfim: Divirta-se!</p>
+
+<blockquote>
+  <p>Lucas Farris desenvolve jogos desde 2006, entrou no mercado mobile em 2011. Atualmente mora na Polonia.</p>
+</blockquote>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/collectionview/2016/03/02/collectionview-uma-nova-abordagem-de-tableviews/" data-toggle="tooltip" data-placement="top" title="UICollectionView - Uma nova abordagem de TableView?">&larr; Post Anterior</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/ios/2016/03/05/testes-de-aceitacao/" data-toggle="tooltip" data-placement="top" title="Testes de Aceitação em iOS">Próximo Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- Disqus Content -->
+
+                <div id="disqus_thread">
+                    <script>
+                        /**
+                        * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                        * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+                        */
+                        
+                        /*
+                        var disqus_config = function () {
+                            this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+                            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                        };
+                        */
+
+                        (function() { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+
+                        s.src = '//nobre84.disqus.com/embed.js';
+
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                        })();
+                    </script>
+                    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://twitter.com/nobre84">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/nobre84">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/nobre84">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="mailto:nobre84@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted"><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Licença Creative Commons" style="border-width:0; display: inline;" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />Este obra está licenciado com uma Licença <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Atribuição-NãoComercial 4.0 Internacional</a>.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js "></script>
+
+
+</body>
+
+</html>

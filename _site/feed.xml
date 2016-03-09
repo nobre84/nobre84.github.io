@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.1.1">Jekyll</generator><link href="http://nobre84.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://nobre84.github.io/" rel="alternate" type="text/html" /><updated>2016-03-09T15:54:02-03:00</updated><id>http://nobre84.github.io/</id><title>iDeas</title><subtitle>Idéias sobre desenvolvimento iOS</subtitle><entry><title>Desmistificando Storyboards</title><link href="http://nobre84.github.io/storyboards/2016/03/06/desmistificando-storyboards/" rel="alternate" type="text/html" title="Desmistificando Storyboards" /><published>2016-03-06T21:00:00-03:00</published><updated>2016-03-06T21:00:00-03:00</updated><id>http://nobre84.github.io/storyboards/2016/03/06/desmistificando-storyboards</id><content type="html" xml:base="http://nobre84.github.io/storyboards/2016/03/06/desmistificando-storyboards/">&lt;blockquote&gt;
+  &lt;p&gt;Rafael Nobre é desenvolvedor iOS desde 2009, tendo trabalhado com UIs programáticas, XIBs, Storyboards, tanto com frames calculados e autosizing masks ou AutoLayout.&lt;br /&gt;
+Durante este mês do equinociOS, aproveita para abrir sua mente com os temas propostos e estudar muita coisa nova.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;interface-builder&quot;&gt;Interface Builder&lt;/h1&gt;
+
+&lt;p&gt;Desde o período de Beta da primeira SDK do então iPhoneOS, em 2008, a Apple já havia disponibilizado e recomendado o uso de sua aplicação de construção de interfaces gráficas - o &lt;em&gt;Interface Builder&lt;/em&gt; ou apenas &lt;em&gt;IB&lt;/em&gt;.&lt;br /&gt;
+Sua função é representar uma hierarquia de &lt;em&gt;views&lt;/em&gt; em um formato &lt;em&gt;XML&lt;/em&gt; interno, permitindo visualmente manipular suas características e comportamento sem precisar utilizar código fonte &lt;em&gt;Objective-C&lt;/em&gt; ou &lt;em&gt;Swift&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-vantagem&quot;&gt;A vantagem&lt;/h2&gt;
+&lt;p&gt;A principal vantagem a ser citada é o ganho em produtividade. Não que escrever &lt;em&gt;UI&lt;/em&gt; via código seja difícil, mas pode ser um processo tedioso e de muitos ciclos de &lt;em&gt;tweak&lt;/em&gt;, &lt;em&gt;build&lt;/em&gt;, &lt;em&gt;run&lt;/em&gt;. Já que, na maior parte das vezes, código de &lt;em&gt;UI&lt;/em&gt; é &lt;em&gt;trivial&lt;/em&gt; e &lt;em&gt;repetitivo&lt;/em&gt;, congelá-lo em um &lt;em&gt;resource&lt;/em&gt; pode ser visto como uma vantagem.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-desvantagem&quot;&gt;A desvantagem&lt;/h2&gt;
+&lt;p&gt;É evidente que, por ser uma abstração construída sobre as classes de &lt;em&gt;UIKit&lt;/em&gt;, pode se dizer que toda &lt;em&gt;UI&lt;/em&gt; construída via &lt;em&gt;IB&lt;/em&gt; pode ser construída via código, mas o inverso nem sempre é verdadeiro. É preciso ser criterioso e conhecer as ferramentas que estão a disposição do desenvolvedor, escolhendo a forma que melhor se adeque à situação apresentada.&lt;/p&gt;
+
+&lt;h1 id=&quot;xibs-vs-storyboards&quot;&gt;XIBs vs Storyboards&lt;/h1&gt;
+&lt;p&gt;Em sua concepção inicial, o &lt;em&gt;IB&lt;/em&gt;, que até o &lt;em&gt;Xcode 3&lt;/em&gt; não era integrado à IDE, atuava em arquivos chamados &lt;em&gt;NIBs&lt;/em&gt; (versão binária do formato, que posteriormente foi modificada para os atuais &lt;em&gt;XIBs&lt;/em&gt;, de versionamento mais conveniente). Sua unidade de trabalho mínima é a &lt;em&gt;UIView&lt;/em&gt;.&lt;br /&gt;
+Já as Storyboards chegaram com o iOS 5, e o diferencial é poder lidar com a construção da hierarquia de diversas &lt;em&gt;views&lt;/em&gt; e a navegação entre elas, sendo o &lt;em&gt;view controller&lt;/em&gt; sua unidade de trabalho mínima.&lt;/p&gt;
+
+&lt;h2 id=&quot;o-problema-das-storyboards&quot;&gt;O problema das Storyboards&lt;/h2&gt;
+&lt;p&gt;Como toda novidade da Apple, muitos desenvolvedores rapidamente adotaram as &lt;em&gt;Storyboards&lt;/em&gt; e - infelizmente - com o suporte e recomendação da própria &lt;em&gt;Apple&lt;/em&gt;¹, passaram a utilizá-la indiscriminadamente em seus novos projetos. A terrível &lt;em&gt;Main.storyboard&lt;/em&gt; agora era promovida como detentora de &lt;em&gt;toda&lt;/em&gt; a &lt;em&gt;UI&lt;/em&gt;, independente do tamanho do &lt;em&gt;app&lt;/em&gt;, seus diferentes fluxos de interação e casos de uso. Este é o resultado:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/nobre84/sb-nightmare.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;Storyboard nightmare&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Além da clara questão organizacional, outro ponto culminante para criar a má fama das Storyboards na comunidade iOS é o fato de que, ao trabalhar em apenas um arquivo monolítico compartilhado em um sistema de versionamento de código, os conflitos se tornam constantes e difíceis de resolver. Pra completar a revolta, o trabalho torna-se difícil em monitores menores, além de degradar a performance do Mac.&lt;/p&gt;
+
+&lt;h2 id=&quot;tem-jeito&quot;&gt;Tem jeito?&lt;/h2&gt;
+&lt;p&gt;A boa notícia é que sim, tem jeito. No primeiro projeto que iniciei após a chegada das &lt;em&gt;Storyboards&lt;/em&gt;, todos esses problemas já haviam chegado à tona. Foi quando, pesquisando sobre boas práticas e se valeria a pena utilizar, li o artigo &lt;a href=&quot;http://robsprogramknowledge.blogspot.com.br/2012/01/uistoryboard-best-practices.html&quot;&gt;UIStoryboard Best Practices&lt;/a&gt;, que ajudou a moldar minha forma de pensar sobre como modularizar os fluxos e casos de uso de um aplicativo em diversas &lt;em&gt;Storyboards&lt;/em&gt;. Isto era 2012 minha gente, e a &lt;em&gt;Apple&lt;/em&gt; até 2014 ainda recomendava fortemente usar uma única &lt;em&gt;Storyboard&lt;/em&gt;, sendo que sua solução de modularização só foi ser lançada no iOS 9. Para dar suporte a modularização no iOS 7+, recomendo &lt;a href=&quot;https://github.com/nobre84/RNExternStoryboard&quot;&gt;RNExternStoryboard&lt;/a&gt; ou &lt;a href=&quot;https://github.com/rob-brown/RBStoryboardLink&quot;&gt;RBStoryboardLink&lt;/a&gt;.&lt;br /&gt;
+Ao separar seus fluxos de trabalho em unidades coesas, mitigamos esses impedimentos, permitindo-nos aproveitar de alguns benefícios: prototipagem extremamente rápida, maior facilidade no entendimento do funcionamento e fluxo do app pela equipe, a possibilidade de utilizar &lt;em&gt;table views&lt;/em&gt; estáticas etc.&lt;/p&gt;
+
+&lt;h1 id=&quot;strings-strings-strings&quot;&gt;Strings, strings, strings&lt;/h1&gt;
+&lt;p&gt;Um dos problemas que afligem o desenvolvedor iOS desde os primórdios são as &lt;strong&gt;hard-coded&lt;/strong&gt; strings. No caso das &lt;em&gt;Storyboards&lt;/em&gt;, como o desenvolvedor precisa referenciar não apenas o &lt;em&gt;view controller&lt;/em&gt;, como também a representação de sua &lt;em&gt;view&lt;/em&gt;, que está no &lt;em&gt;XML&lt;/em&gt; da &lt;em&gt;Storyboard&lt;/em&gt;, para instanciá-los programaticamente é preciso referenciar a &lt;em&gt;Storyboard&lt;/em&gt; e o &lt;em&gt;Storyboard ID&lt;/em&gt; do &lt;em&gt;controller&lt;/em&gt;.&lt;br /&gt;
+Pra lidar com esse problema e outros de mesma natureza, vêm surgindo diversas ferramentas que facilitam fortemente a abolição das &lt;em&gt;hard-coded&lt;/em&gt; strings. A proposta é nunca mais ter que referenciar imagens, &lt;em&gt;Storyboard IDs&lt;/em&gt;, &lt;em&gt;segue identifiers&lt;/em&gt;, &lt;em&gt;cell identifiers&lt;/em&gt;, ou mesmo chaves de localização pelo seu identificador textual.&lt;br /&gt;
+Por exemplo, o &lt;a href=&quot;https://github.com/mac-cain13/R.swift&quot;&gt;R.swift&lt;/a&gt; propõe:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/nobre84/rswiftdemo.gif&quot; alt=&quot;&quot; /&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;Autocomplete! &amp;lt;3&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Já o &lt;a href=&quot;https://github.com/AliSoftware/SwiftGen&quot;&gt;SwiftGen&lt;/a&gt; aborda também Localização, criando um &lt;em&gt;enum&lt;/em&gt; que faz parse de todas suas chaves localizáveis e seus possíveis parâmetros, tornando a internacionalização do &lt;em&gt;app&lt;/em&gt; mais segura ao gerar um erro de compilação ao invés de falhar em &lt;em&gt;runtime&lt;/em&gt;.&lt;br /&gt;
+No lado do &lt;em&gt;Objective-C&lt;/em&gt;, ainda não vi um grande nome. O único que achei que se propôs a oferecer suporte foi o &lt;a href=&quot;https://github.com/Dynamit/referee&quot;&gt;referee&lt;/a&gt;. Por não restringir as referências geradas ao seu próprio contexto, ainda estou à procura de uma solução adequada, ajude-nos nos comentários!&lt;/p&gt;
+
+&lt;h1 id=&quot;finalizando&quot;&gt;Finalizando&lt;/h1&gt;
+&lt;p&gt;O intuito é despertar no desenvolvedor o senso crítico: nos são propostas &lt;strong&gt;ferramentas&lt;/strong&gt;. Como as utilizamos depende inteiramente de nós, e o &lt;em&gt;feedback&lt;/em&gt; que trazemos à comunidade é justamente o que as farão evoluir para atender nossas crescentes necessidades.&lt;br /&gt;
+Se prender a uma ou outra tecnologia nos torna menos efetivos para desempenhar nosso papel de solucionadores de problemas. Meu posicionamento a respeito de quando usar cada ferramenta, no cenário atual, é: &lt;em&gt;views&lt;/em&gt; programáticas quando estritamente necessário, por exemplo &lt;em&gt;views&lt;/em&gt; extremamente dinâmicas; &lt;em&gt;XIBs&lt;/em&gt; para abrigar &lt;em&gt;views&lt;/em&gt; com potencial de reutilização, por exemplo células em &lt;em&gt;table views&lt;/em&gt; e &lt;em&gt;collection views&lt;/em&gt;, &lt;em&gt;storyboards&lt;/em&gt; modulares para modelar o fluxo de navegação do &lt;em&gt;app&lt;/em&gt;, cada tela sendo uma composição elementar das &lt;em&gt;views&lt;/em&gt; reutilizáveis e as contextuais e/ou estáticas que se mostrem necessárias desenhadas diretamente na &lt;em&gt;storyboard&lt;/em&gt;.&lt;br /&gt;
+Recomendo a leitura de alguns artigos que falam de como referenciar &lt;em&gt;views&lt;/em&gt; desenhadas em &lt;em&gt;XIBs&lt;/em&gt; na &lt;em&gt;Storyboard&lt;/em&gt;, uma poderosa ferramenta para ganhar praticidade e reusabilidade nos &lt;em&gt;layouts&lt;/em&gt; com &lt;em&gt;Storyboard&lt;/em&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://cocoanuts.mobi/2014/03/26/reusable/&quot;&gt;Reusing views in storyboards with Auto Layout&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://justabeech.com/2014/07/27/xcode-6-live-rendering-from-nib/&quot;&gt;Xcode 6 Live Rendering from nib&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Um abraço, e até a próxima!&lt;/p&gt;</content><author><name>Rafael Nobre</name></author><category term="storyboards" /><summary>Rafael Nobre é desenvolvedor iOS desde 2009, tendo trabalhado com UIs programáticas, XIBs, Storyboards, tanto com frames calculados e autosizing masks ou AutoLayout.
+Durante este mês do equinociOS, aproveita para abrir sua mente com os temas propostos e estudar muita coisa nova.</summary></entry></feed>

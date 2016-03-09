@@ -1,0 +1,20 @@
+# Site settings
+title: "iDeas"
+header-img: img/home-bg.jpg
+email: nobre84@gmail.com
+copyright_name: Rafael Nobre
+description: "Idéias sobre desenvolvimento iOS"
+url: "http://nobre84.github.io"
+twitter_username: nobre84
+github_username:  nobre84
+facebook_username: nobre84
+email_username: nobre84@gmail.com
+
+# Build settings
+markdown: kramdown
+paginate: 50
+highlighter: rouge
+permalink: pretty
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+
+gems: [jekyll-paginate, jekyll-feed]
